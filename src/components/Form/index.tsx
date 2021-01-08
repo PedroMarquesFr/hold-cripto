@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import MyContext from "../../ContextAPI/ContextProvider";
 import handleFetchAPI from "../../services/api";
 import Coin from "../../services/global";
 
 import { Container } from "./styles";
 
 const Form: React.FC = () => {
-  const [form, setForm] = useState({ value: 0, coin: "btc", cambio: 0 });
+  const {form, setForm} = useContext(MyContext);
   const [coinsArray, setCoinsArray] = useState<any>([]);
 
   useEffect(() => {
@@ -46,7 +47,9 @@ const Form: React.FC = () => {
             onChange={({ target }) => setForm({ ...form, coin: target.value })}
           >
             {coinsArray.map((coin: Coin) => (
-              <option>{coin.name}</option>
+              <option value={coin.symbol}>
+                {coin.name} ({coin.symbol})
+              </option>
             ))}
             <option>dafadsfdasf</option>
           </select>
