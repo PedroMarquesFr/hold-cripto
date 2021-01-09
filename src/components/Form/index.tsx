@@ -37,7 +37,10 @@ const Form: React.FC = () => {
         symbol: choosedCoin.symbol,
         name: choosedCoin.name,
         amountBuyed: form.value,
-        pricePerUnit: choosedCoin.quote.USD.price,
+        pricePerUnit:
+          form.cambio === 0 || isNaN(form.cambio)
+            ? choosedCoin.quote.USD.price
+            : form.cambio,
       },
       ...arrBuys,
     ]);
@@ -49,6 +52,7 @@ const Form: React.FC = () => {
         <label htmlFor="disp">
           Value
           <input
+            min="0"
             name="value"
             type="number"
             data-testid="value-input"
@@ -76,8 +80,9 @@ const Form: React.FC = () => {
         </label>
 
         <label htmlFor="a">
-          Cambio
+          Date Quote
           <input
+            min="0"
             name="value"
             placeholder="optional"
             type="number"

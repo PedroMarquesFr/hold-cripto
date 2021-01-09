@@ -10,9 +10,9 @@ function App() {
   const [arrBuys, setArrBuys] = useState([...getList()])
   const [coinsCurrent, setCoinsCurrent] = useState<any>([]);
 
-//   window.onbeforeunload = function() {
-//     setList(arrBuys);
-//  }
+  window.onbeforeunload = function() {
+    setList(arrBuys);
+ }
   return (
     <MyContext.Provider value={{ form, setForm, arrBuys, setArrBuys, coinsCurrent, setCoinsCurrent}}>
       <div className="App">

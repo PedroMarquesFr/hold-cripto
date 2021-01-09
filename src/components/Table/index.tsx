@@ -15,12 +15,11 @@ const Table: React.FC = () => {
       <Tb striped bordered hover>
         <thead className="thead-dark">
           <tr>
-            <th>Symbol</th>
-            <th>Name</th>
-            <th>Amount Buyed</th>
-            <th>Price</th>
-            <th>Price When Bought</th>
-            <th>Price Now</th>
+            <th>Coin</th>
+            <th>Amount Bought</th>
+            <th>Price per Unit When Bought / Now ($)</th>
+            <th>Value When Bought / Now ($)</th>
+            <th>Profit</th>
           </tr>
         </thead>
         <tbody>
@@ -30,15 +29,46 @@ const Table: React.FC = () => {
             );
             return (
               <tr key={index}>
-                <td>{symbol}</td>
-                <td>{name}</td>
+                <td>
+                  {name} {symbol}
+                </td>
                 <td>{amountBuyed}</td>
-                <td>{pricePerUnit}</td>
-                <td>{amountBuyed * pricePerUnit}</td>
                 {choosedCoin === undefined ? (
                   <td>Loading...</td>
                 ) : (
-                  <td>{amountBuyed * choosedCoin.quote.USD.price}</td>
+                  <td>
+                    {Math.round((pricePerUnit + Number.EPSILON) * 100) / 100} /{" "}
+                    {Math.round(
+                      (choosedCoin.quote.USD.price + Number.EPSILON) * 100
+                    ) / 100}
+                  </td>
+                )}
+                {choosedCoin === undefined ? (
+                  <td>Loading...</td>
+                ) : (
+                  <td>
+                    {Math.round(
+                      (amountBuyed * pricePerUnit + Number.EPSILON) * 100
+                    ) / 100}{" "}
+                    /{" "}
+                    {Math.round(
+                      (amountBuyed * choosedCoin.quote.USD.price +
+                        Number.EPSILON) *
+                        100
+                    ) / 100}
+                  </td>
+                )}
+                {choosedCoin === undefined ? (
+                  <td>Loading...</td>
+                ) : (
+                  <td>
+                    {Math.round(
+                      (amountBuyed * choosedCoin.quote.USD.price -
+                        amountBuyed * pricePerUnit +
+                        Number.EPSILON) *
+                        100
+                    ) / 100}
+                  </td>
                 )}
               </tr>
             );
