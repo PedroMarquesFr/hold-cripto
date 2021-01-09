@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Coin, CoinInfo } from "../../../services/global";
 
 // import { Container } from './styles';
@@ -10,11 +10,37 @@ interface Props {
 
 const TrComponent: React.FC<Props> = ({ coinInfo, choosedCoin, index }) => {
   const { symbol, name, amountBuyed, pricePerUnit } = coinInfo;
+  const [loading, setLoading] = useState(true);
+  const [icon, setIcon] = useState('');
+
+  const getIcon = async (symbol: string) => {
+    try {
+      
+    const { default: Icon } = await import(
+      `../../../assets/color/${symbol.toLowerCase()}.svg`
+    );
+
+    setLoading(false);
+    setIcon(Icon);
+  } catch (error) {
+    const { default: Icon } = await import(
+      `../../../assets/color/.noicon.svg`
+    );
+    setLoading(false);
+    setIcon(Icon);
+  }
+  };
+  getIcon(symbol)
   return (
     <tr key={index}>
-      <td>
-        {name} {symbol}
-      </td>
+      {loading ? (
+        <td>LAL...</td>
+      ) : (
+        <td>
+          <img src={icon} alt="icon" width="27"/>{" "}
+          {name} {symbol}
+        </td>
+      )}
       <td>{amountBuyed}</td>
       {choosedCoin === undefined ? (
         <td>Loading...</td>
