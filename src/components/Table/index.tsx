@@ -1,39 +1,48 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Table as Tb } from "react-bootstrap";
+import MyContext from "../../ContextAPI/ContextProvider";
+import { Coin, CoinInfo } from "../../services/global";
 
 import { Container } from "./styles";
 
 const Table: React.FC = () => {
+  const {
+    arrBuys,
+    coinsCurrent,
+  }: { arrBuys: CoinInfo[]; coinsCurrent: Coin[] } = useContext(MyContext);
   return (
     <Container>
       <Tb striped bordered hover>
-        <thead>
+        <thead className="thead-dark">
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Amount Buyed</th>
+            <th>Price</th>
+            <th>Price When Bought</th>
+            <th>Price Now</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td >Larry the Bird</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-          </tr>
+          {arrBuys.map(({ symbol, name, amountBuyed, pricePerUnit }, index) => {
+            let choosedCoin: Coin | any = coinsCurrent.find(
+              (coin: Coin) => coin.symbol === symbol
+            );
+            return (
+              <tr key={index}>
+                <td>{symbol}</td>
+                <td>{name}</td>
+                <td>{amountBuyed}</td>
+                <td>{pricePerUnit}</td>
+                <td>{amountBuyed * pricePerUnit}</td>
+                {choosedCoin === undefined ? (
+                  <td>Loading...</td>
+                ) : (
+                  <td>{amountBuyed * choosedCoin.quote.USD.price}</td>
+                )}
+              </tr>
+            );
+          })}
         </tbody>
       </Tb>
     </Container>
