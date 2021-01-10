@@ -51,7 +51,7 @@ const Form: React.FC = () => {
     <Container>
       <Fr>
         <Fr.Row className="d-flex align-items-center">
-          <Label htmlFor="disp" className="mr-2 ml-4">
+          <Label htmlFor="disp" className="mr-2">
             Value
             <Fr.Control
               min="0"
@@ -67,7 +67,7 @@ const Form: React.FC = () => {
           </Label>
 
           <Label htmlFor="p" className="mr-2">
-            Coin
+            Coin ( Type to search )
             <Fr.Control
               as="select"
               value={form.coin}
@@ -77,7 +77,7 @@ const Form: React.FC = () => {
             >
               {coinsCurrent.map((coin: Coin, index: number) => (
                 <option value={coin.symbol} key={coin.id}>
-                  {index + 1}. {coin.name} ({coin.symbol})
+                  {coin.name} ({coin.symbol}) {index + 1}
                 </option>
               ))}
             </Fr.Control>
@@ -100,15 +100,15 @@ const Form: React.FC = () => {
           </Label>
           <Col>
             <Button type="submit" onClick={handleSubmit} className="mt-3">
-              Adicionar investimento
+              Add Buy
             </Button>
           </Col>
         </Fr.Row>
       </Fr>
-      <p className="ml-4">
+      <span>
         You Bought {form.value} of {form.coin} when it costs {form.cambio?form.cambio:"current coute"}{" "}
         dolars
-      </p>
+      </span>
     </Container>
   );
 };

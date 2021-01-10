@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Coin, CoinInfo } from "../../../services/global";
 import getIcon from "../../../services/getIcon";
 
@@ -21,13 +21,15 @@ const TrComponent: React.FC<Props> = ({ coinInfo, choosedCoin, index }) => {
   };
 
   Icon(symbol);
+
   return (
     <tr key={index}>
       {loading ? (
         <td>LAL...</td>
       ) : (
         <td>
-          <img src={icon} alt="icon" width="27" /> {name} {symbol}
+          <img src={icon} alt="icon" width="24" /> {name}{" "}
+          <span className="text-secondary">{symbol}</span>
         </td>
       )}
       <td>{amountBuyed}</td>
@@ -55,7 +57,20 @@ const TrComponent: React.FC<Props> = ({ coinInfo, choosedCoin, index }) => {
       {choosedCoin === undefined ? (
         <td>Loading...</td>
       ) : (
-        <td>
+        <td
+          className={`${
+            Math.round(
+              (amountBuyed * choosedCoin.quote.USD.price -
+                amountBuyed * pricePerUnit +
+                Number.EPSILON) *
+                100
+            ) /
+              100 <
+            0
+              ? "text-danger"
+              : "text-success"
+          } font-weight-bold`}
+        >
           {Math.round(
             (amountBuyed * choosedCoin.quote.USD.price -
               amountBuyed * pricePerUnit +

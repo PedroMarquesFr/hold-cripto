@@ -3,7 +3,7 @@ import { Table as Tb } from "react-bootstrap";
 import MyContext from "../../ContextAPI/ContextProvider";
 import { Coin, CoinInfo } from "../../services/global";
 
-import { Container } from "./styles";
+import { Container} from "./styles";
 import TrComponent from "./TrComponent";
 
 const Table: React.FC = () => {
