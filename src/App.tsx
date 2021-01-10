@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import MyContext from "./ContextAPI/ContextProvider";
-import { getList,setList } from "./services/GetSetLocalStore";
+import { getList,setList } from "./services/getSetLocalStore";
 
-import "./App.css";
 import Home from "./pages/Home";
 
 function App() {

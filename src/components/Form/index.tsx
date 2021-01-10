@@ -1,10 +1,11 @@
 import React, { useEffect, useContext } from "react";
+import { Form as Fr, Col, Button } from "react-bootstrap";
 import MyContext from "../../ContextAPI/ContextProvider";
 import handleFetchAPI from "../../services/api";
 import { Coin } from "../../services/global";
 // import { setList } from "../../services/GetSetLocalStore";
 
-import { Container } from "./styles";
+import { Container, Label } from "./styles";
 
 const Form: React.FC = () => {
   const {
@@ -48,57 +49,66 @@ const Form: React.FC = () => {
 
   return (
     <Container>
-      <form>
-        <label htmlFor="disp">
-          Value
-          <input
-            min="0"
-            name="value"
-            type="number"
-            data-testid="value-input"
-            id="disp"
-            value={form.value}
-            onChange={({ target }) =>
-              setForm({ ...form, value: parseFloat(target.value) })
-            }
-          />
-        </label>
+      <Fr>
+        <Fr.Row className="d-flex align-items-center">
+          <Label htmlFor="disp" className="mr-2 ml-4">
+            Value
+            <Fr.Control
+              min="0"
+              name="value"
+              type="number"
+              data-testid="value-input"
+              id="disp"
+              value={form.value}
+              onChange={({ target }) =>
+                setForm({ ...form, value: parseFloat(target.value) })
+              }
+            />
+          </Label>
 
-        <label htmlFor="p">
-          Coin
-          <select
-            value={form.coin}
-            onChange={({ target }) => setForm({ ...form, coin: target.value })}
-          >
-            {coinsCurrent.map((coin: Coin) => (
-              <option value={coin.symbol} key={coin.id}>
-                {coin.name} ({coin.symbol})
-              </option>
-            ))}
-            <option>dafadsfdasf</option>
-          </select>
-        </label>
+          <Label htmlFor="p" className="mr-2">
+            Coin
+            <Fr.Control
+              as="select"
+              value={form.coin}
+              onChange={({ target }) =>
+                setForm({ ...form, coin: target.value })
+              }
+            >
+              {coinsCurrent.map((coin: Coin, index: number) => (
+                <option value={coin.symbol} key={coin.id}>
+                  {index + 1}. {coin.name} ({coin.symbol})
+                </option>
+              ))}
+            </Fr.Control>
+          </Label>
 
-        <label htmlFor="a">
-          Date Quote
-          <input
-            min="0"
-            name="value"
-            placeholder="optional"
-            type="number"
-            data-testid="value-input"
-            id="a"
-            // value={form.cambio}
-            onChange={({ target }) =>
-              setForm({ ...form, cambio: parseFloat(target.value) })
-            }
-          />
-        </label>
-        <button onClick={handleSubmit}>Adicionar investimento</button>
-      </form>
-      {form.value}
-      {form.coin}
-      {form.cambio}
+          <Label htmlFor="a">
+            Date Quote
+            <Fr.Control
+              min="0"
+              name="value"
+              placeholder="optional"
+              type="number"
+              data-testid="value-input"
+              id="a"
+              // value={form.cambio}
+              onChange={({ target }) =>
+                setForm({ ...form, cambio: parseFloat(target.value) })
+              }
+            />
+          </Label>
+          <Col>
+            <Button type="submit" onClick={handleSubmit} className="mt-3">
+              Adicionar investimento
+            </Button>
+          </Col>
+        </Fr.Row>
+      </Fr>
+      <p className="ml-4">
+        You Bought {form.value} of {form.coin} when it costs {form.cambio?form.cambio:"current coute"}{" "}
+        dolars
+      </p>
     </Container>
   );
 };

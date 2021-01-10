@@ -18,8 +18,8 @@ const Table: React.FC = () => {
           <tr>
             <th>Coin</th>
             <th>Amount Bought</th>
-            <th>Price per Unit When Bought / Now ( $ )</th>
-            <th>Value When Bought / Now ( $ )</th>
+            <th className="text-center">Price per Unit When Bought | Now ( $ )</th>
+            <th className="text-center">Value When Bought | Now ( $ )</th>
             <th>Profit</th>
           </tr>
         </thead>

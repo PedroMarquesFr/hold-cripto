@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Coin, CoinInfo } from "../../../services/global";
+import getIcon from "../../../services/getIcon";
 
 // import { Container } from './styles';
 interface Props {
@@ -11,53 +12,41 @@ interface Props {
 const TrComponent: React.FC<Props> = ({ coinInfo, choosedCoin, index }) => {
   const { symbol, name, amountBuyed, pricePerUnit } = coinInfo;
   const [loading, setLoading] = useState(true);
-  const [icon, setIcon] = useState('');
+  const [icon, setIcon] = useState("");
 
-  const getIcon = async (symbol: string) => {
-    try {
-      
-    const { default: Icon } = await import(
-      `../../../assets/color/${symbol.toLowerCase()}.svg`
-    );
-
+  const Icon = async (symbol: string) => {
+    const icon = await getIcon(symbol);
     setLoading(false);
-    setIcon(Icon);
-  } catch (error) {
-    const { default: Icon } = await import(
-      `../../../assets/color/.noicon.svg`
-    );
-    setLoading(false);
-    setIcon(Icon);
-  }
+    setIcon(icon);
   };
-  getIcon(symbol)
+
+  Icon(symbol);
   return (
     <tr key={index}>
       {loading ? (
         <td>LAL...</td>
       ) : (
         <td>
-          <img src={icon} alt="icon" width="27"/>{" "}
-          {name} {symbol}
+          <img src={icon} alt="icon" width="27" /> {name} {symbol}
         </td>
       )}
       <td>{amountBuyed}</td>
       {choosedCoin === undefined ? (
-        <td>Loading...</td>
+        <td className="text-center">Loading...</td>
       ) : (
-        <td>
-          {Math.round((pricePerUnit + Number.EPSILON) * 100) / 100} /{" "}
+        <td className="text-center">
+          {Math.round((pricePerUnit + Number.EPSILON) * 100) / 100} |{" "}
           {Math.round((choosedCoin.quote.USD.price + Number.EPSILON) * 100) /
             100}
         </td>
       )}
       {choosedCoin === undefined ? (
-        <td>Loading...</td>
+        <td className="text-center">Loading...</td>
       ) : (
-        <td>
+        <td className="text-center">
           {Math.round((amountBuyed * pricePerUnit + Number.EPSILON) * 100) /
             100}{" "}
-          /{" "}
+          |{" "}
           {Math.round(
             (amountBuyed * choosedCoin.quote.USD.price + Number.EPSILON) * 100
           ) / 100}
