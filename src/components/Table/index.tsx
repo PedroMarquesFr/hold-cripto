@@ -3,7 +3,8 @@ import { Table as Tb } from "react-bootstrap";
 import MyContext from "../../ContextAPI/ContextProvider";
 import { Coin, CoinInfo } from "../../services/global";
 
-import { Container } from "./styles";
+import { Container} from "./styles";
+import TrComponent from "./TrComponent";
 
 const Table: React.FC = () => {
   const {
@@ -17,8 +18,8 @@ const Table: React.FC = () => {
           <tr>
             <th>Coin</th>
             <th>Amount Bought</th>
-            <th>Price per Unit When Bought / Now ($)</th>
-            <th>Value When Bought / Now ($)</th>
+            <th className="text-center">Price per Unit When Bought | Now ( $ )</th>
+            <th className="text-center">Value When Bought | Now ( $ )</th>
             <th>Profit</th>
           </tr>
         </thead>
@@ -28,49 +29,12 @@ const Table: React.FC = () => {
               (coin: Coin) => coin.symbol === symbol
             );
             return (
-              <tr key={index}>
-                <td>
-                  {name} {symbol}
-                </td>
-                <td>{amountBuyed}</td>
-                {choosedCoin === undefined ? (
-                  <td>Loading...</td>
-                ) : (
-                  <td>
-                    {Math.round((pricePerUnit + Number.EPSILON) * 100) / 100} /{" "}
-                    {Math.round(
-                      (choosedCoin.quote.USD.price + Number.EPSILON) * 100
-                    ) / 100}
-                  </td>
-                )}
-                {choosedCoin === undefined ? (
-                  <td>Loading...</td>
-                ) : (
-                  <td>
-                    {Math.round(
-                      (amountBuyed * pricePerUnit + Number.EPSILON) * 100
-                    ) / 100}{" "}
-                    /{" "}
-                    {Math.round(
-                      (amountBuyed * choosedCoin.quote.USD.price +
-                        Number.EPSILON) *
-                        100
-                    ) / 100}
-                  </td>
-                )}
-                {choosedCoin === undefined ? (
-                  <td>Loading...</td>
-                ) : (
-                  <td>
-                    {Math.round(
-                      (amountBuyed * choosedCoin.quote.USD.price -
-                        amountBuyed * pricePerUnit +
-                        Number.EPSILON) *
-                        100
-                    ) / 100}
-                  </td>
-                )}
-              </tr>
+              <TrComponent
+                coinInfo={{symbol,name,amountBuyed,pricePerUnit}}
+                choosedCoin={choosedCoin}
+                index={index}
+                key={index}
+              />
             );
           })}
         </tbody>
