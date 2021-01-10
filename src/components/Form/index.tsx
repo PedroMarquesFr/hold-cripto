@@ -1,20 +1,22 @@
-import React, { useEffect, useContext,useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Form as Fr, Col, Button } from "react-bootstrap";
 import MyContext from "../../ContextAPI/ContextProvider";
 import handleFetchAPI from "../../services/api";
 import { Coin } from "../../services/global";
 // import { setList } from "../../services/GetSetLocalStore";
+import { nanoid } from "nanoid/non-secure";
 
 import { Container, Label } from "./styles";
 
 const Form: React.FC = () => {
-  const {
-    arrBuys,
-    setArrBuys,
-    coinsCurrent,
-    setCoinsCurrent,
-  } = useContext(MyContext);
-  const [localForm, setLocalForm] = useState({ value: 0, coin: "BTC", cambio: 0 })
+  const { arrBuys, setArrBuys, coinsCurrent, setCoinsCurrent } = useContext(
+    MyContext
+  );
+  const [localForm, setLocalForm] = useState({
+    value: 0,
+    coin: "BTC",
+    cambio: 0,
+  });
 
   useEffect(() => {
     async function FetchAPI() {
@@ -42,6 +44,7 @@ const Form: React.FC = () => {
           localForm.cambio === 0 || isNaN(localForm.cambio)
             ? choosedCoin.quote.USD.price
             : localForm.cambio,
+        id: nanoid(),
       },
       ...arrBuys,
     ]);
@@ -61,7 +64,7 @@ const Form: React.FC = () => {
               id="disp"
               value={localForm.value}
               onChange={({ target }) =>
-              setLocalForm({ ...localForm, value: parseFloat(target.value) })
+                setLocalForm({ ...localForm, value: parseFloat(target.value) })
               }
             />
           </Label>
@@ -72,7 +75,7 @@ const Form: React.FC = () => {
               as="select"
               value={localForm.coin}
               onChange={({ target }) =>
-              setLocalForm({ ...localForm, coin: target.value })
+                setLocalForm({ ...localForm, coin: target.value })
               }
             >
               {coinsCurrent.map((coin: Coin, index: number) => (
@@ -94,7 +97,7 @@ const Form: React.FC = () => {
               id="a"
               // value={form.cambio}
               onChange={({ target }) =>
-              setLocalForm({ ...localForm, cambio: parseFloat(target.value) })
+                setLocalForm({ ...localForm, cambio: parseFloat(target.value) })
               }
             />
           </Label>

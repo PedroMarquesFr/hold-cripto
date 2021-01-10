@@ -11,7 +11,7 @@ const Header: React.FC = () => {
         <CoinStatus coinSymbol="BTC"/>
         <CoinStatus coinSymbol="ETH"/>
         <CoinStatus coinSymbol="ADA"/>
-        <CoinStatus coinSymbol="LTC "/>
+        <CoinStatus coinSymbol="LTC"/>
         <CoinStatus coinSymbol="DOT"/>
         <CoinStatus coinSymbol="XRP"/>
       </ActialPrice>

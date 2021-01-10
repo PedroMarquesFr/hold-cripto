@@ -21,16 +21,17 @@ const Table: React.FC = () => {
             <th className="text-center">Price per Unit When Bought | Now ( $ )</th>
             <th className="text-center">Value When Bought | Now ( $ )</th>
             <th>Profit</th>
+            <th>Remove</th>
           </tr>
         </thead>
         <tbody>
-          {arrBuys.map(({ symbol, name, amountBuyed, pricePerUnit }, index) => {
+          {arrBuys.map(({ symbol, name, amountBuyed, pricePerUnit, id }, index) => {
             let choosedCoin: Coin | any = coinsCurrent.find(
               (coin: Coin) => coin.symbol === symbol
             );
             return (
               <TrComponent
-                coinInfo={{symbol,name,amountBuyed,pricePerUnit}}
+                coinInfo={{symbol,name,amountBuyed,pricePerUnit, id}}
                 choosedCoin={choosedCoin}
                 index={index}
                 key={index}

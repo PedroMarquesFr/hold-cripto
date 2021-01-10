@@ -1,6 +1,7 @@
-import React, { useState, memo } from "react";
+import React, { useState, useContext, memo } from "react";
 import { Coin, CoinInfo } from "../../../services/global";
 import getIcon from "../../../services/getIcon";
+import MyContext from "../../../ContextAPI/ContextProvider";
 
 // import { Container } from './styles';
 interface Props {
@@ -10,9 +11,20 @@ interface Props {
 }
 
 const TrComponent: React.FC<Props> = ({ coinInfo, choosedCoin, index }) => {
-  const { symbol, name, amountBuyed, pricePerUnit } = coinInfo;
+  const { symbol, name, amountBuyed, pricePerUnit, id } = coinInfo;
+  const { arrBuys, setArrBuys } = useContext(MyContext);
   const [loading, setLoading] = useState(true);
   const [icon, setIcon] = useState("");
+
+  const removeItem = () => {
+    arrBuys.forEach((coin: CoinInfo, index: number) => {
+      if (coin.id === id) {
+        console.log("encontro");
+        arrBuys.splice(index, 1);
+        setArrBuys(arrBuys);
+      }
+    });
+  };
 
   const Icon = async (symbol: string) => {
     const icon = await getIcon(symbol);
@@ -79,6 +91,9 @@ const TrComponent: React.FC<Props> = ({ coinInfo, choosedCoin, index }) => {
           ) / 100}
         </td>
       )}
+      <td>
+        <button onClick={removeItem}>remover</button>
+      </td>
     </tr>
   );
 };

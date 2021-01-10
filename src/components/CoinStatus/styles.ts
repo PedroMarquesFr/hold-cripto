@@ -9,3 +9,10 @@ export const Container = styled.span`
   align-items:center;
   color:#D7D7D7;
 `;
+export const Spacer = styled.div`
+    width:2px;
+    border-radius:30px;
+    height:16px;
+    background-color:#5A636B;
+    margin:5px;
+`
