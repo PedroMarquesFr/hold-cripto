@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, memo } from "react";
 import { Coin, CoinInfo } from "../../../services/global";
 import getIcon from "../../../services/getIcon";
 
@@ -83,4 +83,4 @@ const TrComponent: React.FC<Props> = ({ coinInfo, choosedCoin, index }) => {
   );
 };
 
-export default TrComponent;
+export default memo(TrComponent);

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import { Table as Tb } from "react-bootstrap";
 import MyContext from "../../ContextAPI/ContextProvider";
 import { Coin, CoinInfo } from "../../services/global";
@@ -43,4 +43,4 @@ const Table: React.FC = () => {
   );
 };
 
-export default Table;
+export default memo(Table);

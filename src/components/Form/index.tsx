@@ -25,7 +25,7 @@ const Form: React.FC = () => {
       setCoinsCurrent(resp);
     }
     FetchAPI();
-  }, []);
+  }, [setCoinsCurrent]);
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
