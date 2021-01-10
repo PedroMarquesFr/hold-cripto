@@ -5,7 +5,6 @@ import { getList,setList } from "./services/getSetLocalStore";
 import Home from "./pages/Home";
 
 function App() {
-  const [form, setForm] = useState({ value: 0, coin: "BTC", cambio: 0 });
   const [arrBuys, setArrBuys] = useState([...getList()])
   const [coinsCurrent, setCoinsCurrent] = useState<any>([]);
 
@@ -13,7 +12,7 @@ function App() {
     setList(arrBuys);
  }
   return (
-    <MyContext.Provider value={{ form, setForm, arrBuys, setArrBuys, coinsCurrent, setCoinsCurrent}}>
+    <MyContext.Provider value={{arrBuys, setArrBuys, coinsCurrent, setCoinsCurrent}}>
       <div className="App">
         <Home />
       </div>

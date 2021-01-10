@@ -5,7 +5,7 @@ const getIcon = async (symbol: string) => {
     );
     return Icon;
   } catch (error) {
-    const { default: Icon } = await import(`../assets/color/.noicon2.svg`);
+    const { default: Icon } = await import(`../assets/color/.noicon.svg`);
     return Icon;
   }
 };

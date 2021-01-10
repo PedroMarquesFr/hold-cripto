@@ -1,4 +1,5 @@
 import React from "react";
+import CoinStatus from "../CoinStatus";
 
 import { Container, ActialPrice } from "./styles";
 
@@ -7,7 +8,12 @@ const Header: React.FC = () => {
     <Container>
       Coin Wallet
       <ActialPrice>
-        <span>btc</span> <span>eth</span> <span>ada</span>
+        <CoinStatus coinSymbol="BTC"/>
+        <CoinStatus coinSymbol="ETH"/>
+        <CoinStatus coinSymbol="ADA"/>
+        <CoinStatus coinSymbol="LTC "/>
+        <CoinStatus coinSymbol="DOT"/>
+        <CoinStatus coinSymbol="XRP"/>
       </ActialPrice>
     </Container>
   );

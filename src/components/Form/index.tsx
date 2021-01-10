@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext,useState } from "react";
 import { Form as Fr, Col, Button } from "react-bootstrap";
 import MyContext from "../../ContextAPI/ContextProvider";
 import handleFetchAPI from "../../services/api";
@@ -9,13 +9,12 @@ import { Container, Label } from "./styles";
 
 const Form: React.FC = () => {
   const {
-    form,
-    setForm,
     arrBuys,
     setArrBuys,
     coinsCurrent,
     setCoinsCurrent,
   } = useContext(MyContext);
+  const [localForm, setLocalForm] = useState({ value: 0, coin: "BTC", cambio: 0 })
 
   useEffect(() => {
     async function FetchAPI() {
@@ -29,19 +28,20 @@ const Form: React.FC = () => {
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
     const choosedCoin = coinsCurrent.find(
-      (coin: Coin) => coin.symbol === form.coin
+      (coin: Coin) => coin.symbol === localForm.coin
     );
     console.log(choosedCoin.symbol, choosedCoin.name);
     setArrBuys([
       {
         symbol: choosedCoin.symbol,
         name: choosedCoin.name,
-        amountBuyed: form.value,
+        amountBuyed: localForm.value,
         pricePerUnit:
-          form.cambio === 0 || isNaN(form.cambio)
+          localForm.cambio === 0 || isNaN(localForm.cambio)
             ? choosedCoin.quote.USD.price
-            : form.cambio,
+            : localForm.cambio,
       },
       ...arrBuys,
     ]);
@@ -59,9 +59,9 @@ const Form: React.FC = () => {
               type="number"
               data-testid="value-input"
               id="disp"
-              value={form.value}
+              value={localForm.value}
               onChange={({ target }) =>
-                setForm({ ...form, value: parseFloat(target.value) })
+              setLocalForm({ ...localForm, value: parseFloat(target.value) })
               }
             />
           </Label>
@@ -70,9 +70,9 @@ const Form: React.FC = () => {
             Coin ( Type to search )
             <Fr.Control
               as="select"
-              value={form.coin}
+              value={localForm.coin}
               onChange={({ target }) =>
-                setForm({ ...form, coin: target.value })
+              setLocalForm({ ...localForm, coin: target.value })
               }
             >
               {coinsCurrent.map((coin: Coin, index: number) => (
@@ -94,7 +94,7 @@ const Form: React.FC = () => {
               id="a"
               // value={form.cambio}
               onChange={({ target }) =>
-                setForm({ ...form, cambio: parseFloat(target.value) })
+              setLocalForm({ ...localForm, cambio: parseFloat(target.value) })
               }
             />
           </Label>
@@ -106,8 +106,8 @@ const Form: React.FC = () => {
         </Fr.Row>
       </Fr>
       <span>
-        You Bought {form.value} of {form.coin} when it costs {form.cambio?form.cambio:"current coute"}{" "}
-        dolars
+        You Bought {localForm.value} of {localForm.coin} when it costs{" "}
+        {localForm.cambio ? localForm.cambio : "current coute"} dolars
       </span>
     </Container>
   );
