@@ -32,4 +32,5 @@ export interface CoinInfo {
   name: string;
   amountBuyed: number;
   pricePerUnit: number;
+  id:string;
 }
