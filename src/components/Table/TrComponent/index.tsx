@@ -15,13 +15,14 @@ const TrComponent: React.FC<Props> = ({ coinInfo, choosedCoin, index }) => {
   const { arrBuys, setArrBuys } = useContext(MyContext);
   const [loading, setLoading] = useState(true);
   const [icon, setIcon] = useState("");
+  const [msg, setMsg] = useState("remover");
 
   const removeItem = () => {
     arrBuys.forEach((coin: CoinInfo, index: number) => {
       if (coin.id === id) {
         console.log("encontro");
         arrBuys.splice(index, 1);
-        setArrBuys(arrBuys);
+        setArrBuys([...arrBuys]);
       }
     });
   };
@@ -91,8 +92,15 @@ const TrComponent: React.FC<Props> = ({ coinInfo, choosedCoin, index }) => {
           ) / 100}
         </td>
       )}
-      <td>
-        <button onClick={removeItem}>remover</button>
+      <td className="text-right">
+        <button
+          onDoubleClick={removeItem}
+          className="btn btn-danger"
+          onMouseOver={() => setMsg("double click to delete")}
+          onMouseOut={() => setMsg("delete")}
+        >
+          {msg}
+        </button>
       </td>
     </tr>
   );
